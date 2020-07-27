@@ -1,76 +1,78 @@
-import React, { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import arrow from '../arrow.png';
-import { ENTER_KEY_CODE } from '../constant';
+import React, { Component } from "react"
+import { v4 as uuidv4 } from "uuid"
+import arrow from "../arrow.svg"
+import { ENTER_KEY_CODE } from "../constant"
 
-class Header extends Component{
+class Header extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      title: '',
-    };
+      title: "",
+      checkAllComplete: true
+    }
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({
       title: event.target.value
-    });
-  };
+    })
+  }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  handleSubmit = event => {
+    event.preventDefault()
 
-    const { title } = this.state;
+    const { title } = this.state
 
-    if (title.length && event.keyCode === ENTER_KEY_CODE){
+    if (title.length && event.keyCode === ENTER_KEY_CODE) {
       const item = {
         id: uuidv4(),
         title,
         isComplete: false
-      };
+      }
 
       this.setState({
-        title: ''
-      });
+        title: ""
+      })
 
-      this.props.onItemSubmit(item);
+      const { onAddTodo } = this.props
+
+      if (typeof onAddTodo === "function") {
+        onAddTodo(item)
+      }
     }
-  };
+  }
 
   toggleCompleteAll = () => {
-    const { toggleCompleteAll } = this.props;
+    const { onToggleCompleteAll } = this.props
+    const { checkAllComplete } = this.state
 
-    if (typeof toggleCompleteAll === 'function') {
-      toggleCompleteAll();
+    if (typeof onToggleCompleteAll === "function") {
+      onToggleCompleteAll(checkAllComplete)
     }
-  };
+
+    this.setState({
+      checkAllComplete: !checkAllComplete
+    })
+  }
 
   renderArrow = () => {
-    return this.props.arrowShow ? <img src={arrow}/> : null;
-  };
+    return this.props.arrowShow ? <img src={arrow} /> : null
+  }
 
   render() {
-    const { checkAllComplete } = this.props;
+    const { checkAllComplete } = this.state
 
     return (
       <li className="header">
-        <button
-          onClick={this.toggleCompleteAll}
-          className={`${checkAllComplete ? 'active' : ''}`}>
+        <button onClick={this.toggleCompleteAll} className={`${checkAllComplete ? "active" : ""}`}>
           {this.renderArrow()}
         </button>
 
-        <input
-          name="title"
-          placeholder="What needs to be done?"
-          value={this.state.title}
-          onChange={this.handleChange}
-          onKeyUp={this.handleSubmit}
-        />
+        <input name="title" placeholder="What needs to be done?" value={this.state.title} onChange={this.handleChange} onKeyUp={this.handleSubmit} />
       </li>
-    );
+    )
   }
 }
 
-export default Header;
+export default Header

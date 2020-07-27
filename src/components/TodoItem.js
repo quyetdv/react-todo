@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { ENTER_KEY_CODE } from '../constant';
+import * as actions from './../actions/index'
+import {connect} from "react-redux";
 
 class TodoItem extends Component {
   constructor(props) {
@@ -12,19 +14,13 @@ class TodoItem extends Component {
   }
 
   clickDelete = () => {
-    const {onDeleteItem, item} = this.props;
-
-    if (typeof onDeleteItem === 'function') {
-      onDeleteItem(item);
-    }
+    const { onDeleteTodo, item } = this.props;
+    onDeleteTodo(item);
   };
 
   completedItem = () => {
-    const {onCompleteItem, item} = this.props;
-
-    if (typeof onCompleteItem === 'function') {
-      onCompleteItem(item);
-    }
+    const {onCompletedTodo, item} = this.props;
+    onCompletedTodo(item);
   };
 
   switchToEditMode = () => {
@@ -37,7 +33,8 @@ class TodoItem extends Component {
     event.preventDefault();
 
     if (event.keyCode === ENTER_KEY_CODE) {
-      this.props.onFinishEditItem(this.props.item, this.state.newContent);
+      const {onEditTodo, item} = this.props;
+      onEditTodo(item,this.state.newContent );
 
       this.setState({
         nonEditingMode: true,
@@ -85,4 +82,18 @@ class TodoItem extends Component {
   }
 }
 
-export default TodoItem;
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onDeleteTodo : (todo) => {
+      dispatch(actions.deleteTodo(todo));
+    },
+    onCompletedTodo : (todo) => {
+      dispatch(actions.completedTodo(todo));
+    },
+    onEditTodo : (todo, title) => {
+      dispatch(actions.editTodo(todo, title));
+    }
+  }
+};
+
+export default connect(null, mapDispatchToProps) (TodoItem);

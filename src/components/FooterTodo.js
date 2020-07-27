@@ -1,32 +1,26 @@
 import React, { Component } from 'react';
 
 class FooterTodo extends Component{
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      filterButton: 'all'
-    }
-  }
-
-  renderClearButton = () => this.props.countCompleted ? <button onClick={() => this.onClearCompletedClick()}> Clear completed</button> : null;
+  renderClearButton = () => this.props.countCompleted ? <button onClick={this.onClearCompletedClick}> Clear completed</button> : null;
 
   onClearCompletedClick = () => {
-    const { onClearCompletedClick } = this.props;
+    const { onClearCompleted } = this.props;
 
-    if (typeof onClearCompletedClick === 'function') {
-      onClearCompletedClick();
+    if (typeof onClearCompleted === 'function') {
+      onClearCompleted();
     }
   };
 
   onChangeFilter = (filter) => {
-    this.props.onChangeFilter(filter);
+    const { onChangeFilter } = this.props;
 
-    this.setState({filterButton:filter})
+    if (typeof onChangeFilter === 'function') {
+      onChangeFilter(filter);
+    }
   };
 
   render() {
-    const { filterButton } = this.state;
+    const { currentFilter, total } = this.props;
 
     const buttons = [
       {
@@ -46,13 +40,13 @@ class FooterTodo extends Component{
     return (
       <li className="footer">
         <div className="footer-left">
-          <div>{this.props.total} item left</div>
+          <div>{total} item left</div>
 
           <div>
             {buttons.map(button => (
               <button
                 key={button.filter}
-                className={`${filterButton === button.filter ? 'active' : ''}`}
+                className={`${currentFilter === button.filter ? 'active' : ''}`}
                 onClick={() => this.onChangeFilter(button.filter)}
               >
                 {button.label}
