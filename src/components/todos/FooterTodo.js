@@ -1,26 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class FooterTodo extends Component{
-  renderClearButton = () => this.props.countCompleted ? <button onClick={this.onClearCompletedClick}> Clear completed</button> : null;
+const FooterTodo = ({ total, countCompleted, currentFilter, setVisibilityFilter, clearCompleted }) => {
+  const renderClearButton = () => countCompleted ? <button onClick={handleClearCompleted}> Clear completed</button> : null;
 
-  onClearCompletedClick = () => {
-    const { onClearCompleted } = this.props;
-
-    if (typeof onClearCompleted === 'function') {
-      onClearCompleted();
-    }
+  const handleClearCompleted = () => {
+    clearCompleted()
   };
 
-  onChangeFilter = (filter) => {
-    const { onChangeFilter } = this.props;
-
-    if (typeof onChangeFilter === 'function') {
-      onChangeFilter(filter);
-    }
+  const onChangeFilter = (filter) => {
+    setVisibilityFilter(filter)
   };
-
-  render() {
-    const { currentFilter, total } = this.props;
 
     const buttons = [
       {
@@ -47,7 +36,7 @@ class FooterTodo extends Component{
               <button
                 key={button.filter}
                 className={`${currentFilter === button.filter ? 'active' : ''}`}
-                onClick={() => this.onChangeFilter(button.filter)}
+                onClick={() => onChangeFilter(button.filter)}
               >
                 {button.label}
               </button>
@@ -55,10 +44,9 @@ class FooterTodo extends Component{
           </div>
         </div>
 
-        {this.renderClearButton()}
+        {renderClearButton()}
       </li>
     )
-  }
 }
 
 export default FooterTodo;
