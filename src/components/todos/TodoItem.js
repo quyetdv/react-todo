@@ -18,6 +18,7 @@ const TodoItem = ({completeTodo, deleteTodo, editTodo, item}) => {
     }
     const isEditItem = () => {
         setEdit(true)
+        console.log('hey, change edit')
     }
 
     const handleFinishEditItem = (event) => {
