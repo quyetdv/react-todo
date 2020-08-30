@@ -11,6 +11,7 @@ function TodoList ({todos, currentFilter, actions}) {
         const { getDataAPI } = actions
         getDataAPI()
     },[])
+    console.log('hiiiiii')
     let activeList = todos.filter(item => !item.isComplete);
     let countItem = activeList.length;
     let countCompleted = todos.length - activeList.length;
