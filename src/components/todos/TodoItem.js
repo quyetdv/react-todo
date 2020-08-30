@@ -24,7 +24,7 @@ const TodoItem = ({completeTodo, deleteTodo, editTodo, item}) => {
         event.preventDefault()
         if (event.keyCode === ENTER_KEY_CODE) {
             editTodo(item, newContent)
-
+            console.log('abcqweisaydui')
             setEdit(false)
         }
     }

@@ -5,6 +5,7 @@ import { ENTER_KEY_CODE } from "../../constant"
 const TodoForm = props => {
   const { handleSubmit, reset } = props
   const addTodo = e => {
+    console.log('quwyeiu129738918237')
     if (e.keyCode === ENTER_KEY_CODE) {
       e.preventDefault()
       reset()
