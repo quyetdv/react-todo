@@ -19,6 +19,8 @@ function TodoList ({todos, currentFilter, actions}) {
 
     let data = [];
 
+    console.log('ahihihi')
+
     if (currentFilter === "all") {
       data = todos;
     } else if (currentFilter === "active"){
