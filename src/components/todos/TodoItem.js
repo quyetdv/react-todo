@@ -13,12 +13,10 @@ const TodoItem = ({completeTodo, deleteTodo, editTodo, item}) => {
     const handleDelete = () => {
         if (typeof deleteTodo === 'function') {
             deleteTodo(item)
-            console.log('hey, change here')
         }
     }
     const isEditItem = () => {
         setEdit(true)
-        console.log('hey, change edit')
     }
 
     const handleFinishEditItem = (event) => {
