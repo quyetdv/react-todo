@@ -17,7 +17,7 @@ const TodoItem = ({completeTodo, deleteTodo, editTodo, item}) => {
     }
     const isEditItem = () => {
         setEdit(true)
-        console.log('hey, change edit')
+        console.log('A')
     }
 
     const handleFinishEditItem = (event) => {
@@ -31,11 +31,12 @@ const TodoItem = ({completeTodo, deleteTodo, editTodo, item}) => {
 
     const onItemChange = (event) => {
         const value = event.target.value;
-
+        console.log('B')
         setNewContent(value)
     }
 
     const renderContent = () => {
+        console.log('C')
         if (!edit) {
             return <p onDoubleClick={isEditItem}>{newContent}</p>
         }
